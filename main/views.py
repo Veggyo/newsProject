@@ -17,11 +17,15 @@ def news_list_api_view(request):
         return Response(data=data)
 
     elif request.method == 'POST':
+        # Step0. Validation
+        serializer = NewsValidateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=400, data=serializer.errors)
         # Step1. Get data from body
-        title = request.data.get('title')
+        title = serializer.validated_data.get('title')
         text = request.data.get('text')
         amount = request.data.get('amount')
-        is_active = request.data.get('is_active')
+        is_active = serializer.validated_data.get('is_active')
         category_id = request.data.get('category_id')
         tags = request.data.get('tags')
         # Step2. Create news by this data
@@ -45,6 +49,10 @@ def news_detail_view(request, news_id):
         data = NewsSerializer(instance=news, many=False).data
         return Response(data=data)
     elif request.method == 'PUT':
+        # Validate ver.2
+        serializer = NewsValidateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         news.title = request.data.get('title')
         news.text = request.data.get('text')
         news.amount = request.data.get('amount')
