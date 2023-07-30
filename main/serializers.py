@@ -30,7 +30,7 @@ class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
         fields = 'id category tags title text is_active category_name category_str'.split()
-     # 1 version
+        # 1 version
         # def get_category_name(self, news):
         #     if news.category:
         #         return news.category.name

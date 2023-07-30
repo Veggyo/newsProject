@@ -39,7 +39,7 @@ def news_list_api_view(request):
 
 
 @api_view(['GET', 'POST', 'DELETE'])
-def news_detail_view(request, news_id):
+def news_detail_api_view(request, news_id):
     try:
         news = News.objects.get(id=news_id)
     except News.DoesNotExist:
