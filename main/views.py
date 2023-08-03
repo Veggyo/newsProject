@@ -1,7 +1,29 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from main.serializers import *
-from main.models import News
+from main.models import News, Category, Tag
+from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+
+
+class TagModelViewSet(ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    pagination_class = 3
+    lookup_field = 'id'
+
+
+class CategoryLIstApiView(ListAPIView, CreateAPIView):  # You can also use ListCreateAPIView, it can list and create too
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    pagination_class = PageNumberPagination
+
+
+class CategoryDetailApiView(RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    lookup_field = 'id'
 
 
 @api_view(['GET', 'POST'])
