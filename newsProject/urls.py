@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from main import views
+from . import swagger
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -8,3 +8,5 @@ urlpatterns = [
     path('api/v1/news/<int:news_id>/', include('main.urls')),
     path('api/v1/users/', include('users.urls'))
 ]
+
+urlpatterns += swagger.urlpatterns

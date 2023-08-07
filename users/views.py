@@ -2,7 +2,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
-from .serializers import AuthorizationValidateSerializator, RegistrationValidateSerializer
+from .serializers import AuthorizationValidateSerializer, RegistrationValidateSerializer
 from django.contrib.auth.models import User
 
 
@@ -21,7 +21,7 @@ def registration_api_view(request):
 @api_view(['POST'])
 def authorization_api_view(request):
     # Step0: Validation
-    serializer = AuthorizationValidateSerializator(data=request.data)
+    serializer = AuthorizationValidateSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     # Step1: Get data from client
     username = serializer.validated_data.get('username')
